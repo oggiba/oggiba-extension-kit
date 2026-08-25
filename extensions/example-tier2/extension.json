@@ -1,0 +1,152 @@
+{
+  "author": "",
+  "category": "General",
+  "dimension": "",
+  "extensionNamespace": "",
+  "fullName": "Example (Tier 2 - define-once JS)",
+  "gdevelopVersion": "",
+  "helpPath": "",
+  "iconUrl": "",
+  "name": "ExampleTier2",
+  "previewIconUrl": "",
+  "shortDescription": "Named cooldown tracker - shows the define-once-in-onFirstSceneLoaded pattern.",
+  "version": "0.1.0",
+  "description": "",
+  "tags": [],
+  "authorIds": [],
+  "dependencies": [],
+  "globalVariables": [],
+  "sceneVariables": [],
+  "eventsFunctions": [
+    {
+      "description": "",
+      "fullName": "",
+      "functionType": "Action",
+      "name": "onFirstSceneLoaded",
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "if (!gdjs.__exampleTier2) {",
+            "  gdjs.__exampleTier2 = {",
+            "    // Map<cooldownName, msTimestampWhenItEnds>",
+            "    until: new Map(),",
+            "  };",
+            "}",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Starts (or restarts) a named cooldown for Duration seconds.",
+      "fullName": "Trigger a named cooldown",
+      "functionType": "Action",
+      "name": "TriggerCooldown",
+      "sentence": "Trigger cooldown _PARAM0_ for _PARAM1_ seconds",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const name = eventsFunctionContext.getArgument(\"Name\");",
+            "const durationSeconds = eventsFunctionContext.getArgument(\"Duration\");",
+            "const now = runtimeScene.getTimeManager().getTimeFromStart();",
+            "gdjs.__exampleTier2.until.set(name, now + durationSeconds * 1000);",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Cooldown name",
+          "name": "Name",
+          "type": "string"
+        },
+        {
+          "description": "Duration in seconds",
+          "name": "Duration",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "True as long as the given named cooldown hasn't elapsed yet.",
+      "fullName": "Is a named cooldown active",
+      "functionType": "Condition",
+      "name": "IsOnCooldown",
+      "sentence": "_PARAM0_ is on cooldown",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const name = eventsFunctionContext.getArgument(\"Name\");",
+            "const until = gdjs.__exampleTier2.until.get(name);",
+            "const now = runtimeScene.getTimeManager().getTimeFromStart();",
+            "eventsFunctionContext.returnValue = until !== undefined && now < until;",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Cooldown name",
+          "name": "Name",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "0 if the cooldown doesn't exist or already elapsed.",
+      "fullName": "Remaining cooldown time (seconds)",
+      "functionType": "Expression",
+      "name": "RemainingCooldown",
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const name = eventsFunctionContext.getArgument(\"Name\");",
+            "const until = gdjs.__exampleTier2.until.get(name);",
+            "const now = runtimeScene.getTimeManager().getTimeFromStart();",
+            "eventsFunctionContext.returnValue =",
+            "    until === undefined ? 0 : Math.max(0, (until - now) / 1000);",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Cooldown name",
+          "name": "Name",
+          "type": "string"
+        }
+      ],
+      "objectGroups": [],
+      "expressionType": {
+        "type": "expression"
+      }
+    }
+  ],
+  "eventsFunctionsFolderStructure": {
+    "folderName": "__ROOT"
+  },
+  "eventsBasedBehaviors": [],
+  "eventsBasedObjects": []
+}

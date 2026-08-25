@@ -1,0 +1,58 @@
+{
+  "author": "",
+  "category": "General",
+  "dimension": "",
+  "extensionNamespace": "",
+  "fullName": "Example (Tier 1 - plain JS)",
+  "gdevelopVersion": "",
+  "helpPath": "",
+  "iconUrl": "",
+  "name": "ExampleTier1",
+  "previewIconUrl": "",
+  "shortDescription": "One-off expression with no shared state - shows when NOT to reach for a Tier 2/3 project.",
+  "version": "0.1.0",
+  "description": "",
+  "tags": [],
+  "authorIds": [],
+  "dependencies": [],
+  "globalVariables": [],
+  "sceneVariables": [],
+  "eventsFunctions": [
+    {
+      "description": "Returns a random integer between 1 and Sides (inclusive).",
+      "fullName": "Roll a dice",
+      "functionType": "Expression",
+      "name": "RollDice",
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "eventsFunctionContext.returnValue =",
+            "    Math.floor(Math.random() * eventsFunctionContext.getArgument(\"Sides\")) + 1;",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Number of sides on the dice",
+          "name": "Sides",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": [],
+      "expressionType": {
+        "type": "expression"
+      }
+    }
+  ],
+  "eventsFunctionsFolderStructure": {
+    "folderName": "__ROOT"
+  },
+  "eventsBasedBehaviors": [],
+  "eventsBasedObjects": []
+}
